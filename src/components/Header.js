@@ -1,10 +1,14 @@
-import {Typography, AppBar, Toolbar} from '@material-ui/core';
+import { Typography, AppBar, Toolbar, IconButton } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 
 function Header() {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography>
+        <IconButton edge="start" color="inherit" aria-label="open drawer">
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6">
           Test App
         </Typography>
       </Toolbar>
