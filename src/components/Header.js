@@ -1,9 +1,15 @@
+import {Typography, AppBar, Toolbar} from '@material-ui/core';
+
 function Header() {
   return (
-    <div className="App-header">
-      <h1>Test App</h1>
-    </div>
-  )
+    <AppBar position="static">
+      <Toolbar>
+        <Typography>
+          Test App
+        </Typography>
+      </Toolbar>
+    </AppBar>
+  );
 }
 
-export default Header
+export default Header;
