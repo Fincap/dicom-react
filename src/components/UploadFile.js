@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core';
 
-function UploadFile() {
+const UploadFile = () => {
   return (
     <Button variant="contained" color="primary" component="label">
       Upload

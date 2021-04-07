@@ -1,14 +1,17 @@
 import './App.css';
 import Header from './components/Header';
-import { Typography } from '@material-ui/core';
+import UploadFile from './components/UploadFile';
+import { Typography, Container } from '@material-ui/core';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
+    <Container className="App" maxWidth="md" disableGutters>
       <Header />
       <br />
       <Typography>Test paragraph, please ignore.</Typography>
-    </div>
+      <br />
+      <UploadFile />
+    </Container>
   );
 }
 

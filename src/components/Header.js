@@ -1,7 +1,7 @@
 import { Typography, AppBar, Toolbar, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
-function Header() {
+const Header = () => {
   return (
     <AppBar position="static">
       <Toolbar>
