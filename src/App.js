@@ -4,11 +4,15 @@ import UploadFile from "./components/UploadFile";
 import { Container } from "@material-ui/core";
 
 const App = () => {
+  const beginLoad = (fileList) => {
+    console.log(fileList);
+  };
+
   return (
     <Container className="App" maxWidth="md" disableGutters>
       <Header />
       <br />
-      <UploadFile />
+      <UploadFile onUpload={beginLoad} />
     </Container>
   );
 };
