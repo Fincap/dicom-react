@@ -14,7 +14,7 @@ const UploadFile = () => {
   return (
     <div className="upload-file">
       <Button variant="contained" color="primary" component="label">
-        Upload
+        Choose Files
         <input
           accept=".dcm,.dicom"
           id="upload-file"
@@ -22,9 +22,6 @@ const UploadFile = () => {
           hidden
           type="file"
           onChange={(e) => readFiles(e.target.files)}
-          onClick={(e) => {
-            e.currentTarget.value = null;
-          }}
         />
       </Button>
       {isFilePicked ? (
