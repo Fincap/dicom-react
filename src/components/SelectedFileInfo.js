@@ -3,11 +3,14 @@ import ListItemText from "@material-ui/core/ListItemText";
 import prettyBytes from "pretty-bytes";
 
 const UploadInfo = ({ fileInfo }) => {
-  const fileSize = prettyBytes(fileInfo.size);
+  const secondaryText =
+    prettyBytes(fileInfo.size) +
+    " - Last modified " +
+    new Date(fileInfo.lastModified).toUTCString();
 
   return (
     <ListItem divider>
-      <ListItemText primary={fileInfo.name} secondary={fileSize} />
+      <ListItemText primary={fileInfo.name} secondary={secondaryText} />
     </ListItem>
   );
 };
