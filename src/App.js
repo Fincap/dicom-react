@@ -1,9 +1,10 @@
 import "./App.css";
 import { useState } from "react";
+import { Container } from "@material-ui/core";
 import Header from "./components/Header";
 import UploadFile from "./components/UploadFile";
 import LoadingScreen from "./components/LoadingScreen";
-import { Container } from "@material-ui/core";
+import pythonInit from "./loaders";
 
 /* List of states:
 SELECT_FILES
@@ -18,7 +19,10 @@ const App = () => {
   const beginLoad = async (fileList) => {
     console.log(fileList);
     setState("PYTHON_INIT");
-    await new Promise((r) => setTimeout(r, 2000)); // Sample loading time until Pyodide setup actually implemented.
+    pythonInit(onPythonLoaded);
+  };
+
+  const onPythonLoaded = () => {
     setState("LOADING_IMAGESET");
   };
 
