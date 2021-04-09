@@ -7,7 +7,7 @@ const App = () => {
   return (
     <Container className="App" maxWidth="md" disableGutters>
       <Header />
-      <Typography>Test paragraph, please ignore.</Typography>
+      <br />
       <UploadFile />
     </Container>
   );
