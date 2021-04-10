@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container } from "@material-ui/core";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -16,6 +16,13 @@ DICOM_VIEW
 
 const App = () => {
   const [state, setState] = useState("SELECT_FILES");
+  const [scriptsLoaded, setScriptsLoaded] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("DOMContentLoaded", () => {
+      setScriptsLoaded(true);
+    });
+  }, []);
 
   const beginLoad = async (fileList) => {
     console.log(fileList);
@@ -45,7 +52,7 @@ const App = () => {
 
   return (
     <Container className="App" maxWidth="md" disableGutters>
-      <Header />
+      <Header scriptsLoaded={scriptsLoaded} />
       <div className="main-content">{switchStates()}</div>
       <Footer />
     </Container>

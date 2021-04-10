@@ -1,7 +1,5 @@
-.App {
-  text-align: center;
-}
-
-.main-content {
+.main-content,
+footer {
   margin: 1em;
+  text-align: center;
 }
