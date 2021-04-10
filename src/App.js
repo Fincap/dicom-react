@@ -6,7 +6,6 @@ import Footer from "./components/Footer";
 import UploadFile from "./components/UploadFile";
 import LoadingScreen from "./components/LoadingScreen";
 import pythonInit from "./loaders";
-import { blue, purple } from "@material-ui/core/colors";
 
 /* List of states:
 SELECT_FILES
