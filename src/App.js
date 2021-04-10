@@ -2,6 +2,7 @@ import "./App.css";
 import { useState } from "react";
 import { Container } from "@material-ui/core";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import UploadFile from "./components/UploadFile";
 import LoadingScreen from "./components/LoadingScreen";
 import pythonInit from "./loaders";
@@ -45,8 +46,8 @@ const App = () => {
   return (
     <Container className="App" maxWidth="md" disableGutters>
       <Header />
-      <br />
-      {switchStates()}
+      <main className="content">{switchStates()}</main>
+      <Footer />
     </Container>
   );
 };
