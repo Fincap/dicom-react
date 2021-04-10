@@ -43,15 +43,17 @@ const App = () => {
   const [state, setState] = useState("SELECT_FILES");
   const [scriptsLoaded, setScriptsLoaded] = useState(false);
 
+  // Initalise python environment
   useEffect(() => {
     runPythonScript(init_environment, pythonLoaded);
   }, []);
 
+  // Callback function after python is initialised
   const pythonLoaded = () => {
     setScriptsLoaded(true);
   };
 
-  // Begin initialising python
+  // TODO Process the files selected
   const loadFiles = async (fileList) => {
     console.log(fileList);
     setState("LOADING_IMAGESET");
