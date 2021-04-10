@@ -42,7 +42,7 @@ const Header = ({ scriptsLoaded }) => {
         <Typography className={classes.title} variant="h6">
           DICOM-React
         </Typography>
-        {scriptsLoaded && (
+        {!scriptsLoaded && (
           <>
             <Typography className={classes.loadingText}>
               Loading Pyodide
