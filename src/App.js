@@ -63,7 +63,9 @@ const App = () => {
   const switchStates = () => {
     switch (state) {
       case "SELECT_FILES":
-        return <UploadFile onUpload={loadFiles} />;
+        return (
+          <UploadFile onUpload={loadFiles} scriptsLoaded={scriptsLoaded} />
+        );
 
       case "LOADING_IMAGESET":
         return <LoadingScreen loadingText="Loading DICOM data" />;

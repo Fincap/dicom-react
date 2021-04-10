@@ -3,7 +3,7 @@ import { Button } from "@material-ui/core";
 import SelectedFileList from "./SelectedFileList";
 import Alert from "./Alert";
 
-const UploadFile = ({ onUpload }) => {
+const UploadFile = ({ onUpload, scriptsLoaded }) => {
   const [selectedFiles, setSelectedFiles] = useState();
   const [isFilePicked, setIsFilePicked] = useState(false);
   const [currentAlertText, setCurrentAlertText] = useState("");
@@ -53,8 +53,11 @@ const UploadFile = ({ onUpload }) => {
             color="primary"
             component="label"
             onClick={loadSelectedFiles}
+            disabled={scriptsLoaded ? false : true}
           >
-            Load Selected Files
+            {scriptsLoaded
+              ? "Load Selected Files"
+              : "Waiting For Python To Load"}
           </Button>
         </>
       )}
