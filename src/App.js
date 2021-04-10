@@ -9,7 +9,6 @@ import pythonInit from "./loaders";
 
 /* List of states:
 SELECT_FILES
-PYTHON_INIT
 LOADING_IMAGESET
 DICOM_VIEW
 */
@@ -37,23 +36,18 @@ const App = () => {
   const [state, setState] = useState("SELECT_FILES");
   const [scriptsLoaded, setScriptsLoaded] = useState(false);
 
-  // Effect hook for updating screen when scripts are loaded
-  // TODO the DOMContentLoaded event is not the correct method of doing this.
   useEffect(() => {
-    window.addEventListener("DOMContentLoaded", () => {
-      setScriptsLoaded(true);
-    });
+    const loadPython = async () => pythonInit(pythonLoaded);
+    loadPython();
   }, []);
 
-  // Begin initialising python
-  const beginLoad = async (fileList) => {
-    console.log(fileList);
-    setState("PYTHON_INIT");
-    pythonInit(onPythonLoaded);
+  const pythonLoaded = () => {
+    setScriptsLoaded(true);
   };
 
-  // Begin processing image set
-  const onPythonLoaded = () => {
+  // Begin initialising python
+  const loadFiles = async (fileList) => {
+    console.log(fileList);
     setState("LOADING_IMAGESET");
   };
 
@@ -61,10 +55,7 @@ const App = () => {
   const switchStates = () => {
     switch (state) {
       case "SELECT_FILES":
-        return <UploadFile onUpload={beginLoad} />;
-
-      case "PYTHON_INIT":
-        return <LoadingScreen loadingText="Loading Python" />;
+        return <UploadFile onUpload={loadFiles} />;
 
       case "LOADING_IMAGESET":
         return <LoadingScreen loadingText="Loading DICOM data" />;
