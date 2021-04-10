@@ -1,11 +1,12 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import { Container } from "@material-ui/core";
+import { Container, createMuiTheme, ThemeProvider } from "@material-ui/core";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import UploadFile from "./components/UploadFile";
 import LoadingScreen from "./components/LoadingScreen";
 import pythonInit from "./loaders";
+import { blue, purple } from "@material-ui/core/colors";
 
 /* List of states:
 SELECT_FILES
@@ -13,6 +14,18 @@ PYTHON_INIT
 LOADING_IMAGESET
 DICOM_VIEW
 */
+
+// Create theme
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: purple[900],
+    },
+    secondary: {
+      main: blue[600],
+    },
+  },
+});
 
 const App = () => {
   // Define state
@@ -57,11 +70,13 @@ const App = () => {
   };
 
   return (
-    <Container className="App" maxWidth="md" disableGutters>
-      <Header scriptsLoaded={scriptsLoaded} />
-      <div className="main-content">{switchStates()}</div>
-      <Footer />
-    </Container>
+    <ThemeProvider theme={theme}>
+      <Container className="App" maxWidth="md" disableGutters>
+        <Header scriptsLoaded={scriptsLoaded} />
+        <div className="main-content">{switchStates()}</div>
+        <Footer />
+      </Container>
+    </ThemeProvider>
   );
 };
 

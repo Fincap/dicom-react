@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
   loadingBar: {
     display: "inline",
     marginLeft: "1em",
-    color: "lightblue",
   },
   loadingText: {
     display: "inline",
