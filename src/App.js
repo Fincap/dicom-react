@@ -1,11 +1,18 @@
 import "./App.css";
-import { useState, useEffect } from "react";
-import { Container, createMuiTheme, ThemeProvider } from "@material-ui/core";
+
+// Script imports1
+import runPythonScript from "./loaders";
+import init_environment from "./python/init_environment.py";
+
+// Component imports
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import UploadFile from "./components/UploadFile";
 import LoadingScreen from "./components/LoadingScreen";
-import pythonInit from "./loaders";
+
+// Library imports
+import { useState, useEffect } from "react";
+import { Container, createMuiTheme, ThemeProvider } from "@material-ui/core";
 
 /* List of states:
 SELECT_FILES
@@ -37,8 +44,7 @@ const App = () => {
   const [scriptsLoaded, setScriptsLoaded] = useState(false);
 
   useEffect(() => {
-    const loadPython = async () => pythonInit(pythonLoaded);
-    loadPython();
+    runPythonScript(init_environment, pythonLoaded);
   }, []);
 
   const pythonLoaded = () => {
