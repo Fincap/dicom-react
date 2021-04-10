@@ -19,10 +19,16 @@ DICOM_VIEW
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: purple[900],
+      main: "#5e35b1",
+      light: "#9162e4",
+      dark: "#280680",
+      contrastText: "#ffffff",
     },
     secondary: {
-      main: blue[600],
+      main: "#546e7a",
+      light: "#819ca9",
+      dark: "#29434e",
+      contrastText: "#ffffff",
     },
   },
 });

@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   loadingBar: {
     display: "inline",
     marginLeft: "1em",
+    color: theme.palette.primary.contrastText,
   },
   loadingText: {
     display: "inline",
@@ -46,10 +47,7 @@ const Header = ({ scriptsLoaded }) => {
             <Typography className={classes.loadingText}>
               Loading Pyodide
             </Typography>
-            <CircularProgress
-              className={classes.loadingBar}
-              color="secondary"
-            />
+            <CircularProgress className={classes.loadingBar} />
           </>
         )}
       </Toolbar>
