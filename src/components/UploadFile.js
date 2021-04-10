@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Typography } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import SelectedFileList from "./SelectedFileList";
 import Alert from "./Alert";
 
@@ -45,7 +45,7 @@ const UploadFile = ({ onUpload }) => {
           onChange={(e) => readFiles(e.target.files)}
         />
       </Button>
-      {isFilePicked ? (
+      {isFilePicked && (
         <>
           <SelectedFileList selectedFiles={selectedFiles} />
           <Button
@@ -57,8 +57,6 @@ const UploadFile = ({ onUpload }) => {
             Load Selected Files
           </Button>
         </>
-      ) : (
-        <Typography>Select a file to show details</Typography>
       )}
     </div>
   );
