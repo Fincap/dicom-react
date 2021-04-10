@@ -46,7 +46,7 @@ const App = () => {
   return (
     <Container className="App" maxWidth="md" disableGutters>
       <Header />
-      <main className="content">{switchStates()}</main>
+      <div className="main-content">{switchStates()}</div>
       <Footer />
     </Container>
   );
