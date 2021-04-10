@@ -40,7 +40,7 @@ const Header = ({ scriptsLoaded }) => {
           <MenuIcon />
         </IconButton>
         <Typography className={classes.title} variant="h6">
-          Test App
+          DICOM-React
         </Typography>
         {scriptsLoaded && (
           <>
