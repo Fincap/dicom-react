@@ -1,14 +1,16 @@
-const loadFiles = (fileList) => {
-  let loadedFiles = [];
+const readFileAsBytes = (file) => {
+  const fileReader = new FileReader();
 
-  let fileReader = new FileReader();
-  fileReader.onload = (event) => {
-    loadedFiles = [...loadedFiles, new Int8Array(event.target.result)];
-  };
+  return new Promise((resolve, reject) => {
+    fileReader.onload = () => {
+      resolve(new Int8Array(fileReader.result));
+    };
+    fileReader.readAsArrayBuffer(file);
+  });
+};
 
-  const filesInBytes = fileList.map((file) =>
-    fileReader.readAsArrayBuffer(file)
-  );
+const loadFiles = async (fileList) => {
+  const filesInBytes = Promise.all(fileList.map(readFileAsBytes));
 
   return filesInBytes;
 };
