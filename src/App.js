@@ -1,7 +1,7 @@
 import "./App.css";
 
 // Script imports1
-import runPythonScript from "./loaders";
+import runPythonScript from "./python/run-py";
 import init_environment from "./python/init_environment.py";
 
 // Component imports

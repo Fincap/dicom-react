@@ -1,4 +1,4 @@
-import { asyncRun } from "./python/py-worker";
+import { asyncRun } from "./py-worker";
 
 const runPythonScript = (script, callback) => {
   fetch(script)
