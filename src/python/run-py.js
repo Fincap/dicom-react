@@ -1,11 +1,11 @@
 import { asyncRun } from "./py-worker";
 
-const runPythonScript = (script, callback) => {
+const runPythonScript = (script, callback, context) => {
   fetch(script)
     .then((src) => src.text())
     .then(async (code) => {
-      await asyncRun(code);
-      callback();
+      const { results } = await asyncRun(code, context);
+      callback(results);
     });
 };
 

@@ -6,6 +6,11 @@ const loadFiles = (fileList) => {
     loadedFiles = [...loadedFiles, new Int8Array(event.target.result)];
   };
 
-  const filesInBytes = fileList.map(fileReader.readAsArrayBuffer);
-  window.pyodide.globals.raw_loaded = filesInBytes;
+  const filesInBytes = fileList.map((file) =>
+    fileReader.readAsArrayBuffer(file)
+  );
+
+  return filesInBytes;
 };
+
+export default loadFiles;

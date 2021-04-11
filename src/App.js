@@ -1,9 +1,12 @@
 import "./App.css";
 
-// Script imports1
+// JS script imports
 import runPythonScript from "./python/run-py";
+import loadFiles from "./model/load-files";
+
+// Python script imports
 import init_environment from "./python/init_environment.py";
-import declare_globals from "./python/declare_globals.py";
+import load_dataset_as_json from "./python/load_dataset_as_json.py";
 
 // Component imports
 import Header from "./components/Header";
@@ -43,12 +46,11 @@ const App = () => {
   // Define state
   const [state, setState] = useState("SELECT_FILES");
   const [scriptsLoaded, setScriptsLoaded] = useState(false);
+  const [pythonContext, setPythonContext] = useState({});
 
   // Initalise python environment
   useEffect(() => {
-    runPythonScript(init_environment, () => {
-      runPythonScript(declare_globals, pythonLoaded);
-    });
+    runPythonScript(init_environment, pythonLoaded);
   }, []);
 
   // Callback function after python is initialised
@@ -56,10 +58,26 @@ const App = () => {
     setScriptsLoaded(true);
   };
 
-  // TODO Process the files selected
-  const loadFiles = async (fileList) => {
+  // Process the files selected
+  const beginLoadingFiles = (fileList) => {
     console.log(fileList);
     setState("LOADING_IMAGESET");
+    setPythonContext({
+      raw_loaded: loadFiles(fileList),
+    });
+  };
+
+  // Convert loaded files to JSON objects using python
+  useEffect(() => {
+    if (state === "LOADING_IMAGESET") {
+      console.log(pythonContext);
+      runPythonScript(load_dataset_as_json, finishLoadingFiles, pythonContext);
+    }
+  }, [pythonContext, state]);
+
+  // Callback function after files are loaded as JSON objects
+  const finishLoadingFiles = (result) => {
+    console.log(result);
   };
 
   // Control the flow between app states
@@ -67,7 +85,10 @@ const App = () => {
     switch (state) {
       case "SELECT_FILES":
         return (
-          <UploadFile onUpload={loadFiles} scriptsLoaded={scriptsLoaded} />
+          <UploadFile
+            onUpload={beginLoadingFiles}
+            scriptsLoaded={scriptsLoaded}
+          />
         );
 
       case "LOADING_IMAGESET":
