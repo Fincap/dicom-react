@@ -60,10 +60,11 @@ const App = () => {
 
   // Process the files selected
   const beginLoadingFiles = (fileList) => {
-    console.log(fileList);
     setState("LOADING_IMAGESET");
-    setPythonContext({
-      raw_loaded: loadFiles(fileList),
+    loadFiles(fileList).then((loadedFiles) => {
+      setPythonContext({
+        raw_loaded: loadedFiles,
+      });
     });
   };
 
@@ -73,11 +74,12 @@ const App = () => {
       console.log(pythonContext);
       runPythonScript(load_dataset_as_json, finishLoadingFiles, pythonContext);
     }
-  }, [pythonContext, state]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pythonContext]);
 
   // Callback function after files are loaded as JSON objects
-  const finishLoadingFiles = (result) => {
-    console.log(result);
+  const finishLoadingFiles = (outcome) => {
+    console.log(outcome);
   };
 
   // Control the flow between app states
