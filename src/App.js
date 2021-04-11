@@ -79,7 +79,8 @@ const App = () => {
 
   // Callback function after files are loaded as JSON objects
   const finishLoadingFiles = (outcome) => {
-    console.log(outcome);
+    console.log(outcome.result);
+    console.log(outcome.error);
   };
 
   // Control the flow between app states
