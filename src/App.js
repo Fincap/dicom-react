@@ -3,6 +3,7 @@ import "./App.css";
 // Script imports1
 import runPythonScript from "./python/run-py";
 import init_environment from "./python/init_environment.py";
+import declare_globals from "./python/declare_globals.py";
 
 // Component imports
 import Header from "./components/Header";
@@ -45,7 +46,9 @@ const App = () => {
 
   // Initalise python environment
   useEffect(() => {
-    runPythonScript(init_environment, pythonLoaded);
+    runPythonScript(init_environment, () => {
+      runPythonScript(declare_globals, pythonLoaded);
+    });
   }, []);
 
   // Callback function after python is initialised
