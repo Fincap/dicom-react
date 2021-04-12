@@ -7,5 +7,5 @@ def pydicom_init(*args):
     print("Pydicom loaded")
 
 
-await micropip.install('pydicom-2.0.0-py3-none-any.whl')
+await micropip.install('pydicom-2.2.0.dev0-py3-none-any.whl')
 pydicom_init()
