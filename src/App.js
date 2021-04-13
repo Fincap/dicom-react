@@ -50,10 +50,12 @@ const App = () => {
 
   // Initalise python environment
   useEffect(() => {
-    runPythonScript(init_environment, pythonLoaded);
+    runPythonScript(init_environment).then(() => {
+      pythonLoaded();
+    });
   }, []);
 
-  // Callback function after python is initialised
+  // Callback function after python `is initialised
   const pythonLoaded = () => {
     setScriptsLoaded(true);
   };
@@ -71,16 +73,30 @@ const App = () => {
   // Convert loaded files to JSON objects using python
   useEffect(() => {
     if (state === "LOADING_IMAGESET") {
-      console.log(pythonContext);
-      runPythonScript(load_dataset_as_json, finishLoadingFiles, pythonContext);
+      console.log({ ...pythonContext, val: "test" });
+      // What we might be able to do is iterate through each file loaded, add that to the context, then call a python
+      // scripts to convert each dataset to a json string INDIVIDUALLY rather than return an array of string (which
+      // doesn't work apparently).
+      runPythonScript(load_dataset_as_json, pythonContext).then(
+        ({ results, error }) => {
+          finishLoadingFiles({ results, error });
+        }
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pythonContext]);
 
   // Callback function after files are loaded as JSON objects
-  const finishLoadingFiles = (outcome) => {
-    console.log(outcome.result);
-    console.log(outcome.error);
+  const finishLoadingFiles = ({ results, error }) => {
+    if (results) {
+      let formattedResult = results.replace(/./, "[");
+      formattedResult = formattedResult.replace(/.$/, "]");
+      formattedResult = formattedResult.replaceAll(/\\/g, "");
+      const testDataset = JSON.parse(formattedResult);
+      console.log(testDataset[0]);
+    } else if (error) {
+      console.log(error);
+    }
   };
 
   // Control the flow between app states
