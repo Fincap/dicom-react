@@ -16,7 +16,10 @@ import LoadingScreen from "./components/LoadingScreen";
 
 // Library imports
 import { useState, useEffect } from "react";
-import { Container, createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { Container, ThemeProvider } from "@material-ui/core";
+// Temporary workaround to Material-UI issue resulting in an incorrect warning.
+// Should be solved in Material-UI 5.0.0
+import { unstable_createMuiStrictModeTheme as createMuiTheme } from "@material-ui/core";
 
 /* List of states:
 SELECT_FILES
