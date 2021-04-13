@@ -50,6 +50,7 @@ const App = () => {
   const [state, setState] = useState("SELECT_FILES");
   const [areScriptsLoaded, setScriptsLoaded] = useState(false);
   const [pythonContext, setPythonContext] = useState({});
+  const [dicomObjects, setDicomObjects] = useState([]);
 
   // Initalise python environment
   useEffect(() => {
@@ -63,10 +64,18 @@ const App = () => {
     if (state === "LOADING_IMAGESET") {
       convertLoadedFilesToJSON(pythonContext).then((res) => {
         console.log(res);
+        setDicomObjects(res);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pythonContext]);
+
+  useEffect(() => {
+    if (state === "LOADING_IMAGESET") {
+      setState("DICOM_VIEW");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dicomObjects]);
 
   // Callback function after python `is initialised
   const pythonLoaded = () => {
@@ -108,6 +117,9 @@ const App = () => {
 
       case "LOADING_IMAGESET":
         return <LoadingScreen loadingText="Loading DICOM data" />;
+
+      case "DICOM_VIEW":
+        return <p>Dicom View</p>;
 
       default:
         return <p>An error has occured</p>;
