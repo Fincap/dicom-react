@@ -9,10 +9,10 @@ const readFileAsBytes = (file) => {
   });
 };
 
-const loadFiles = async (fileList) => {
+const loadSelectedFilesAsBytes = async (fileList) => {
   const filesInBytes = Promise.all(fileList.map(readFileAsBytes));
 
   return filesInBytes;
 };
 
-export default loadFiles;
+export default loadSelectedFilesAsBytes;
