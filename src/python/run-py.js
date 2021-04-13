@@ -1,6 +1,6 @@
 import { asyncRun } from "./py-worker";
 
-const runPythonScript = (script, context) => {
+const runPythonScript = async (script, context) => {
   return new Promise((resolve, reject) => {
     fetch(script)
       .then((src) => src.text())
