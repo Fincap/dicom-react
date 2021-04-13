@@ -45,7 +45,7 @@ const theme = createMuiTheme({
 const App = () => {
   // Define state
   const [state, setState] = useState("SELECT_FILES");
-  const [scriptsLoaded, setScriptsLoaded] = useState(false);
+  const [areScriptsLoaded, setScriptsLoaded] = useState(false);
   const [pythonContext, setPythonContext] = useState({});
 
   // Initalise python environment
@@ -87,7 +87,7 @@ const App = () => {
         return (
           <UploadFile
             onUpload={beginLoadingFiles}
-            scriptsLoaded={scriptsLoaded}
+            areScriptsLoaded={areScriptsLoaded}
           />
         );
 
@@ -102,7 +102,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Container className="App" maxWidth="md" disableGutters>
-        <Header scriptsLoaded={scriptsLoaded} />
+        <Header areScriptsLoaded={areScriptsLoaded} />
         <div className="main-content">{switchStates()}</div>
         <Footer />
       </Container>

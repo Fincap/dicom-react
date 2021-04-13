@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = ({ scriptsLoaded }) => {
+const Header = ({ areScriptsLoaded }) => {
   const classes = useStyles();
 
   return (
@@ -42,7 +42,7 @@ const Header = ({ scriptsLoaded }) => {
         <Typography className={classes.title} variant="h6">
           DICOM-React
         </Typography>
-        {!scriptsLoaded && (
+        {!areScriptsLoaded && (
           <>
             <Typography className={classes.loadingText}>
               Loading Pyodide
