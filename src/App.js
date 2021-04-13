@@ -73,30 +73,41 @@ const App = () => {
   // Convert loaded files to JSON objects using python
   useEffect(() => {
     if (state === "LOADING_IMAGESET") {
-      console.log({ ...pythonContext, val: "test" });
-      // What we might be able to do is iterate through each file loaded, add that to the context, then call a python
-      // scripts to convert each dataset to a json string INDIVIDUALLY rather than return an array of string (which
-      // doesn't work apparently).
-      runPythonScript(load_dataset_as_json, pythonContext).then(
-        ({ results, error }) => {
-          finishLoadingFiles({ results, error });
-        }
-      );
+      loadEachFile();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pythonContext]);
 
-  // Callback function after files are loaded as JSON objects
-  const finishLoadingFiles = ({ results, error }) => {
-    if (results) {
-      let formattedResult = results.replace(/./, "[");
-      formattedResult = formattedResult.replace(/.$/, "]");
-      formattedResult = formattedResult.replaceAll(/\\/g, "");
-      const testDataset = JSON.parse(formattedResult);
-      console.log(testDataset[0]);
-    } else if (error) {
-      console.log(error);
-    }
+  const loadEachFile = async () => {
+    // Asynchronous but sequential processing of each file selected using reducer.
+    const datasetList = await pythonContext.raw_loaded.reduce(
+      async (memo, file, index) => {
+        console.log(index);
+        // Wait for the previous result to be calculated
+        const prevResults = await memo;
+        // Calculate the current result
+        const context = { ...pythonContext, cur_file: index };
+        const { results, error } = await runPythonScript(
+          load_dataset_as_json,
+          context
+        );
+        if (results) {
+          // If the python script runs without errors, format the result and append the result to the list of
+          // previous results.
+          let formattedResult = results.replace(/./, "[");
+          formattedResult = formattedResult.replace(/.$/, "]");
+          formattedResult = formattedResult.replaceAll(/\\/g, "");
+          const resultingDataset = JSON.parse(formattedResult)[0];
+          return [...prevResults, resultingDataset];
+        } else if (error) {
+          // Otherwise, log the error and just return the existing list of results, skipping over the current one.
+          console.log(error);
+          return prevResults;
+        }
+      },
+      []
+    );
+    console.log(datasetList);
   };
 
   // Control the flow between app states

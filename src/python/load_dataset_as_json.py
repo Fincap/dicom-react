@@ -1,23 +1,15 @@
 def load_dataset_as_json():
     # pylint: disable=import-error
-    from js import raw_loaded   # Access the context passed into the worker
+    from js import raw_loaded, cur_file   # Access the context passed into the worker
     import pydicom
-    filenames = []
+    import json
 
-    # pylint: disable=undefined-variable
-    for i, raw_image in enumerate(raw_loaded):
-        filename = str(i) + ".dcm"
-        filenames.append(filename)
-        with open(filename, "wb") as f:
-            f.write(raw_image.tobytes())
+    filename = str(cur_file) + ".dcm"
+    with open(filename, "wb") as f:
+        f.write(raw_loaded[cur_file].tobytes())
 
-    dataset_list_json = []
-
-    for filename in filenames:
-        ds = pydicom.dcmread(filename)
-        dataset_list_json.append(ds.to_json())
-
-    return dataset_list_json
+    ds = pydicom.dcmread(filename)
+    return json.dumps(ds.to_json())
 
 
 load_dataset_as_json()
