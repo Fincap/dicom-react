@@ -1,12 +1,15 @@
 import {
   Typography,
   AppBar,
+  Menu,
+  MenuItem,
   Toolbar,
   IconButton,
   CircularProgress,
   makeStyles,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
+import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -25,8 +28,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = ({ areScriptsLoaded }) => {
+const Header = ({ areScriptsLoaded, menuActions }) => {
+  const [anchorEl, setAnchorEl] = useState();
   const classes = useStyles();
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const onReturnFileSelectClick = () => {
+    handleClose();
+    menuActions.returnToFileSelect();
+  };
 
   return (
     <AppBar position="static">
@@ -36,9 +53,20 @@ const Header = ({ areScriptsLoaded }) => {
           edge="start"
           color="inherit"
           aria-label="open drawer"
+          onClick={handleClick}
         >
           <MenuIcon />
         </IconButton>
+        <Menu
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={onReturnFileSelectClick}>
+            Return to File Select
+          </MenuItem>
+        </Menu>
         <Typography className={classes.title} variant="h6">
           DICOM-React
         </Typography>

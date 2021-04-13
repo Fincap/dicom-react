@@ -58,9 +58,31 @@ const App = () => {
     });
   }, []);
 
+  // Convert loaded files to JSON objects using python
+  useEffect(() => {
+    if (state === "LOADING_IMAGESET") {
+      convertLoadedFilesToJSON(pythonContext).then((res) => {
+        console.log(res);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pythonContext]);
+
   // Callback function after python `is initialised
   const pythonLoaded = () => {
     setScriptsLoaded(true);
+  };
+
+  // Menu action: Return to file select
+  const returnToFileSelect = () => {
+    // Set state to SELECT_FILES
+    setState("SELECT_FILES");
+    setPythonContext({});
+  };
+
+  // Map menu actions to object
+  const menuActions = {
+    returnToFileSelect: returnToFileSelect,
   };
 
   // Process the files selected
@@ -72,16 +94,6 @@ const App = () => {
       });
     });
   };
-
-  // Convert loaded files to JSON objects using python
-  useEffect(() => {
-    if (state === "LOADING_IMAGESET") {
-      convertLoadedFilesToJSON(pythonContext).then((res) => {
-        console.log(res);
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pythonContext]);
 
   // Control the flow between app states
   const switchStates = () => {
@@ -105,7 +117,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Container className="App" maxWidth="md" disableGutters>
-        <Header areScriptsLoaded={areScriptsLoaded} />
+        <Header areScriptsLoaded={areScriptsLoaded} menuActions={menuActions} />
         <div className="main-content">{switchStates()}</div>
         <Footer />
       </Container>
